@@ -91,7 +91,7 @@ ev rm MY_KEY OTHER_KEY
 ```bash
 ev ls
 ```
-<sup>ℹ This will list all variables</sup>
+<sup>This will list all variables</sup>
 ```bash
 ev ls MY_KEY
 ```
