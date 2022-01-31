@@ -4,13 +4,13 @@ import { version } from '../package.json'
 import { listEnvironments, loadFromDotenv, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
 import { listVariables, removeVariable, setVariable } from './variables'
 import k from 'kleur'
-import { promptSecret } from './secret'
+import { loadSecretFromEnv, promptSecret } from './secret'
 import { error } from './log'
 import { getKeyFromSecret } from './encrypt'
 
 
 async function fetchVariables(environment?: string) {
-    const secret = await loadSecretFromFile()
+    const secret = loadSecretFromEnv() || await loadSecretFromFile()
     const variables = loadVariablesFromFile(secret, environment)
     return { secret, variables }
 }

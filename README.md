@@ -110,6 +110,12 @@ ev load .env
 ## Using in your project
 After initializing and setting a secret, you can just load from your previous `.env` file with the command `ev load .env` and run either `ev | source` or `eval $(ev)` to export the variables into the environment.
 
+### Passing a secret through a environment variable
+In a CI environment, you want your secret to be passed through an environment variable set by your CI system. You can do this by setting the `EV_SECRET` variable
+```bash
+EV_SECRET=my-secret ev | source
+```
+
 ### Javascript projects
 You can add a `pre` script to your `package.json` file to load the variables into the environment before your development script runs. Here's an example:
 ```json
@@ -129,6 +135,7 @@ You can even create different scripts for different environments
   }
 }
 ```
+
 
 
 
