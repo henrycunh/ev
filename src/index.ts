@@ -94,7 +94,7 @@ async function fetchVariables(environment?: string) {
         .action(async(path, { env }) => {
             const { secret, variables } = await fetchVariables(env)
             const dotenvVariables = loadFromDotenv(path)
-            saveVariablesToFile({ ...dotenvVariables, ...variables }, secret, env)
+            saveVariablesToFile({ ...variables, ...dotenvVariables }, secret, env)
             console.log(`Added ${k.green().bold(Object.keys(dotenvVariables).length)} variables.`)
         })
 

@@ -101,4 +101,34 @@ ev -e staging MY_KEY=VALUE_IN_STAGING
 ```
 <sup>ℹ The variables for each environment is stored in a different file</sup>
 
+### Loading variables from a `.env` file
+```bash
+ev load .env
+```
+<sup>ℹ All the variables on `.env` will be loaded into the default environment</sup>
+
+## Using in your project
+After initializing and setting a secret, you can just load from your previous `.env` file with the command `ev load .env` and run either `ev | source` or `eval $(ev)` to export the variables into the environment.
+
+### Javascript projects
+You can add a `pre` script to your `package.json` file to load the variables into the environment before your development script runs. Here's an example:
+```json
+{
+  "scripts": {
+    "predev": "eval $(ev)",
+    "dev": "..."
+  }
+}
+```
+You can even create different scripts for different environments
+```json
+{
+  "scripts": {
+    "predev:staging": "eval $(ev -e staging)",
+    "dev:staging": "..."
+  }
+}
+```
+
+
 
