@@ -7,9 +7,9 @@
 
 ## Features
 - ⏱ **Version control** - allows for storing environment variables securely in git
-- 🔑 **Secure** - uses a single key to secure your variables
-- 🧑‍💻 **Easy sharing** - sharing the key means sharing your variables
-- 🛠 **Great DX** - tools for easily managing keys  
+- 🔑 **Secure** - uses a single secret to secure your variables
+- 🧑‍💻 **Easy sharing** - sharing the secret means sharing your variables
+- 🛠 **Great DX** - tools for easily managing variables  
 
 <p align="center">
   <table>
@@ -44,16 +44,25 @@ You can install `ev` globally <sup>*(so you wont have to prepend `npx`)*</sup> b
 npm install -g @henrycunh/ev
 ```
 
-### Adding new variables
+## Usage
+
+<details open>
+<summary><strong>Adding new variables →</strong></summary>
+<br>
+
 ```bash
 ev MY_KEY=VALUE OTHER_KEY=OTHER_VALUE
 ```
 <sup>ℹ This will add the `MY_KEY` and `OTHER_KEY` variables, if the variables already exists, their value will be overrided</sup>
+</details>
 
-
-### Exporting variables into the environment
+<details>
+<summary><strong>Exporting variables into the environment →</strong></summary>
+<br>
 ```bash
 ev | source
+# you can alternatively use
+eval $(ev)
 ```
 <sup>ℹ This will export every variable into the environment</sup>
 
@@ -63,14 +72,20 @@ You can test it by running
 ev TEST=123 && ev | source && echo $TEST
 ```
 <sup>ℹ This should print `Added 1 variables.` followed by `123`.</sup>
-
-### Removing variables
+</details>
+  
+<details>
+<summary><strong>Removing variables →</strong></summary>
+<br>
 ```bash
 ev rm MY_KEY OTHER_KEY
 ```
 <sup>ℹ This will remove the `MY_KEY` and `OTHER_KEY` variables</sup>
+</details>
 
-### Listing variables
+<details>
+<summary><strong>Listing variables →</strong></summary>
+<br>
 ```bash
 ev ls
 ```
@@ -79,33 +94,45 @@ ev ls
 ev ls MY_KEY
 ```
 <sup>ℹ This will list the `MY_KEY` variable</sup>
+</details>
 
-### Changing the secret key
+<details>
+<summary><strong>Changing the secret key →</strong></summary>
+<br>
 ```bash
 ev change-secret
 ```
 <sup>ℹ This will prompt for the old key and the new one, if the old key is correct, it will re-encrypt the variables with the new one</sup>
+</details>
 
-
-### Setting the secret key
+<details>
+<summary><strong>Setting the secret key →</strong></summary>
+<br>
 In case you mistype your secret, you can just run this to type the secret again
 ```bash
 ev set-secret
 ```
 <sup>ℹ This will prompt for the secret</sup>
+</details>
 
-### Using different environments
+<details>
+<summary><strong>Using different environments →</strong></summary>
+<br>
 You can append the option `--env` <sup>*(or `-e`)*</sup> on any command to specify a different environment
 ```bash
 ev -e staging MY_KEY=VALUE_IN_STAGING
 ```
 <sup>ℹ The variables for each environment is stored in a different file</sup>
-
-### Loading variables from a `.env` file
+</details>
+  
+<details>
+  <summary><strong>Loading variables from a <code>.env</code> file →</strong></summary>
+<br>
 ```bash
 ev load .env
 ```
 <sup>ℹ All the variables on `.env` will be loaded into the default environment</sup>
+</details>
 
 ## Using in your project
 After initializing and setting a secret, you can just load from your previous `.env` file with the command `ev load .env` and run either `ev | source` or `eval $(ev)` to export the variables into the environment.
