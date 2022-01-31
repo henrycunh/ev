@@ -95,6 +95,7 @@ export const loadFromDotenv = (path: string) => {
     }
     const variables = fs.readFileSync(path, 'utf8')
         .split('\n')
+        .filter(line => !(/^$|^#/.test(line)))
         .map(line => {
             const tokens = line.split('=')
             return tokens[0] === '' ? 
