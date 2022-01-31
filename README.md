@@ -52,39 +52,42 @@ npm install -g @henrycunh/ev
 ```bash
 ev MY_KEY=VALUE OTHER_KEY=OTHER_VALUE
 ```
-<sup>ℹ This will add the `MY_KEY` and `OTHER_KEY` variables, if the variables already exists, their value will be overrided</sup>
+<sup>This will add the `MY_KEY` and `OTHER_KEY` variables, if the variables already exists, their value will be overrided</sup>
 </details>
 
 <details>
 <summary><strong>Exporting variables into the environment →</strong></summary>
 <br>
+  
 ```bash
 ev | source
 # you can alternatively use
 eval $(ev)
 ```
-<sup>ℹ This will export every variable into the environment</sup>
+<sup>This will export every variable into the environment</sup>
 
 You can test it by running
 
 ```bash
 ev TEST=123 && ev | source && echo $TEST
 ```
-<sup>ℹ This should print `Added 1 variables.` followed by `123`.</sup>
+<sup>This should print `Added 1 variables.` followed by `123`.</sup>
 </details>
   
 <details>
 <summary><strong>Removing variables →</strong></summary>
 <br>
+  
 ```bash
 ev rm MY_KEY OTHER_KEY
 ```
-<sup>ℹ This will remove the `MY_KEY` and `OTHER_KEY` variables</sup>
+<sup>This will remove the `MY_KEY` and `OTHER_KEY` variables</sup>
 </details>
 
 <details>
 <summary><strong>Listing variables →</strong></summary>
 <br>
+  
 ```bash
 ev ls
 ```
@@ -92,45 +95,49 @@ ev ls
 ```bash
 ev ls MY_KEY
 ```
-<sup>ℹ This will list the `MY_KEY` variable</sup>
+<sup>This will list the `MY_KEY` variable</sup>
 </details>
 
 <details>
 <summary><strong>Changing the secret key →</strong></summary>
 <br>
+  
 ```bash
 ev change-secret
 ```
-<sup>ℹ This will prompt for the old key and the new one, if the old key is correct, it will re-encrypt the variables with the new one</sup>
+<sup>This will prompt for the old key and the new one, if the old key is correct, it will re-encrypt the variables with the new one</sup>
 </details>
 
 <details>
 <summary><strong>Setting the secret key →</strong></summary>
 <br>
+  
 In case you mistype your secret, you can just run this to type the secret again
 ```bash
 ev set-secret
 ```
-<sup>ℹ This will prompt for the secret</sup>
+<sup>This will prompt for the secret</sup>
 </details>
 
 <details>
 <summary><strong>Using different environments →</strong></summary>
 <br>
+  
 You can append the option `--env` <sup>*(or `-e`)*</sup> on any command to specify a different environment
 ```bash
 ev -e staging MY_KEY=VALUE_IN_STAGING
 ```
-<sup>ℹ The variables for each environment is stored in a different file</sup>
+<sup>The variables for each environment is stored in a different file</sup>
 </details>
   
 <details>
   <summary><strong>Loading variables from a <code>.env</code> file →</strong></summary>
 <br>
+  
 ```bash
 ev load .env
 ```
-<sup>ℹ All the variables on `.env` will be loaded into the default environment</sup>
+<sup>All the variables on `.env` will be loaded into the default environment</sup>
 </details>
 
 ## Using in your project
