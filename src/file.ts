@@ -4,6 +4,7 @@ import fse from 'fs-extra'
 import { promptSecret } from './secret'
 import { decrypt, encrypt, getKeyFromSecret } from './encrypt'
 import { slugify } from './utils'
+import { error } from './log'
 
 const DEFAULT_DIRECTORY = '.ev'
 const getFilePath = (name: string, environment?: string) => 
@@ -85,4 +86,27 @@ export const listEnvironments = () => {
     return environments
         .filter(environment => environment.endsWith('.variables'))
         .map(environment => environment.replace('.variables', ''))
-}  
+}
+
+export const loadFromDotenv = (path: string) => {
+    if (!fs.existsSync(path)) {
+        error(`File ${path} does not exist`)
+        return {}
+    }
+    const variables = fs.readFileSync(path, 'utf8')
+        .split('\n')
+        .map(line => {
+            const tokens = line.split('=')
+            return tokens[0] === '' ? 
+                null : 
+                { 
+                    key: tokens[0], 
+                    value: tokens.slice(1).join('=') 
+                }
+        })
+        .filter(variable => variable !== null)
+        .reduce((variables, { key, value }) => {
+            return { ...variables, [key]: value }
+        }, {})
+    return variables
+}

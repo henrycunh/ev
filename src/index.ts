@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
 import { version } from '../package.json'
-import { listEnvironments, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
+import { listEnvironments, loadFromDotenv, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
 import { listVariables, removeVariable, setVariable } from './variables'
 import k from 'kleur'
 import { promptSecret } from './secret'
@@ -86,6 +86,16 @@ async function fetchVariables(environment?: string) {
         .action(async() => {
             const newSecret = await promptSecret('Enter a new secret')
             saveSecretToFile(newSecret)
+        })
+
+    cli
+        .command('load <path>', 'Loads variables from a .env file')
+        .option('--env, -e <env>', 'Sets the environment for which to add the variables')
+        .action(async(path, { env }) => {
+            const { secret, variables } = await fetchVariables(env)
+            const dotenvVariables = loadFromDotenv(path)
+            saveVariablesToFile({ ...dotenvVariables, ...variables }, secret, env)
+            console.log(`Added ${k.green().bold(Object.keys(dotenvVariables).length)} variables.`)
         })
 
     cli.help()
