@@ -1,29 +1,28 @@
 <div align="center">
 
 # ev
-> a tool for versioning, securing and easily sharing environment variables
+  <sup>a tool for versioning, securing and easily sharing environment variables</sup>
 
 </div>
 
-## Features
-- ⏱ **Version control** - allows for storing environment variables securely in git
-- 🔑 **Secure** - uses a single secret to secure your variables
-- 🧑‍💻 **Easy sharing** - sharing the secret means sharing your variables
-- 🛠 **Great DX** - tools for easily managing variables  
 
 <p align="center">
   <table>
     <tbody>
       <td align="center">
         <img width="2000" height="0"><br>
-        Explore the documentation<br>
-        <sub>
-        <a href="#initializing">initializing</a> • <a href="#adding-new-variables">adding new variables</a> • <a href="#exporting-variables-into-environment">exporting into environment</a> • <a href="#removing-variables">removing variables</a></sub><br>
+        <a href="#initializing">initializing</a> • <a href="#commands">commands</a> • <a href="#using-in-your-project">using in your project</a><br>
         <img width="2000" height="0">
       </td>
     </tbody>
   </table>
 </p>
+
+## Features
+- ⏱ **Version control** - allows for storing environment variables securely in git
+- 🔑 **Secure** - uses a single secret to secure your variables
+- 🧑‍💻 **Easy sharing** - sharing the secret means sharing your variables
+- 🛠 **Great DX** - tools for easily managing variables  
 
 ## Getting started
 
@@ -44,7 +43,7 @@ You can install `ev` globally <sup>*(so you wont have to prepend `npx`)*</sup> b
 npm install -g @henrycunh/ev
 ```
 
-## Usage
+## Commands
 
 <details open>
 <summary><strong>Adding new variables →</strong></summary>
