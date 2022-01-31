@@ -41,7 +41,7 @@ And add `.ev/secret` to `.gitignore`
 
 You can install `ev` globally <sup>*(so you wont have to prepend `npx`)*</sup> by running,
 ```bash
-npm install -g ev
+npm install -g @henrycunh/ev
 ```
 
 ### Adding new variables

@@ -1,4 +1,4 @@
-#!/bin/env node
+#!/usr/bin/env node
 import { cac } from 'cac'
 import { version } from '../package.json'
 import { listEnvironments, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
@@ -32,7 +32,7 @@ async function fetchVariables(environment?: string) {
         .action(async(variablesToRemove, { env }) => {
             const { variables, secret } = await fetchVariables(env)
             const newVariables = variablesToRemove
-                .reduce((_: any, variableToRemove: string) => removeVariable(variableToRemove, variables), variables)
+                .reduce((acc: any, variableToRemove: string) => removeVariable(variableToRemove, acc), variables)
             saveVariablesToFile(newVariables, secret, env)
         })
     
@@ -50,9 +50,9 @@ async function fetchVariables(environment?: string) {
                 }
             } else {
                 const newVariables = variablesToAdd
-                    .reduce((_: any, variableToAdd: string) => {
+                    .reduce((acc: any, variableToAdd: string) => {
                         const [key, ...value] = variableToAdd.split('=')
-                        return setVariable(key, value.join('='), variables)
+                        return setVariable(key, value.join('='), acc)
                     }, variables)
                 console.log(
                     `Added ${k.green().bold(variablesToAdd.length)} variables.`
