@@ -146,7 +146,7 @@ After initializing and setting a secret, you can just load from your previous `.
 ### Passing a secret through a environment variable
 In a CI environment, you want your secret to be passed through an environment variable set by your CI system. You can do this by setting the `EV_SECRET` variable
 ```bash
-EV_SECRET=my-secret ev | source
+EV_SECRET=my-secret eval $(npx ev)
 ```
 
 ### Javascript projects
