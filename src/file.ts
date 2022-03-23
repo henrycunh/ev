@@ -54,29 +54,29 @@ export const saveVariablesToFile = (variables: any, secret: Buffer, environment?
     fs.writeFileSync(filePath, encryptedContent)
 }
 
-export const loadSecretFromFile = async() => {
-    const filePath = getFilePath('secret')
+export const loadSecretFromFile = async(environment?: string) => {
+    const filePath = getFilePath(environment ? `${environment}.secret` : 'secret')
     fse.ensureFileSync(filePath)
 
     const secret = fs.readFileSync(filePath)
     
     if (secret.length === 0) {
         const newSecret = await promptSecret('Enter a new secret')
-        return saveSecretToFile(newSecret)
+        return saveSecretToFile(newSecret, environment)
     }
     
     return secret
 }
 
-export const saveSecretToFile = (secret: string) => {
-    const filePath = getFilePath('secret')
+export const saveSecretToFile = (secret: string, environment?: string) => {
+    const filePath = getFilePath(environment ? `${environment}.secret` : 'secret')
     fse.ensureFileSync(filePath)
     
     const secretKey = getKeyFromSecret(Buffer.from(secret, 'utf8'))
     fs.writeFileSync(filePath, secretKey)
 
     const gitIgnoreFilePath = getFilePath('.gitignore')
-    fs.writeFileSync(gitIgnoreFilePath, 'secret')
+    fs.writeFileSync(gitIgnoreFilePath, '*secret')
 
     return secretKey
 }

@@ -8,9 +8,8 @@ import { loadSecretFromEnv, promptSecret } from './secret'
 import { error } from './log'
 import { getKeyFromSecret } from './encrypt'
 
-
 async function fetchVariables(environment?: string) {
-    const secret = loadSecretFromEnv() || await loadSecretFromFile()
+    const secret = loadSecretFromEnv() || await loadSecretFromFile(environment)
     const variables = loadVariablesFromFile(secret, environment)
     return { secret, variables }
 }
@@ -63,7 +62,8 @@ async function fetchVariables(environment?: string) {
     
     cli
         .command('change-secret', 'Creates a new secret key')
-        .action(async() => {
+        .option('--env, -e <env>', 'Sets the environment for which to change the secret')
+        .action(async({ env }) => {
             const secret = await loadSecretFromFile()
             const oldSecret = await promptSecret('Enter your old secret')
             const oldSecretKey = getKeyFromSecret(Buffer.from(oldSecret, 'utf8'))
@@ -72,20 +72,23 @@ async function fetchVariables(environment?: string) {
                 return
             }
             const newSecret = await promptSecret('Enter a new secret')
-            const newSecretKey = saveSecretToFile(newSecret)
-            const variables = loadVariablesFromFile(secret)
-            saveVariablesToFile(variables, newSecretKey)
-            for (const env of listEnvironments()) {
-                const envVariables = loadVariablesFromFile(secret, env)
-                saveVariablesToFile(envVariables, newSecretKey, env)
+            const newSecretKey = saveSecretToFile(newSecret, env)
+            const variables = loadVariablesFromFile(secret, env)
+            saveVariablesToFile(variables, newSecretKey, env)
+            if (!env) {
+                for (const environment of listEnvironments()) {
+                    const envVariables = loadVariablesFromFile(secret, environment)
+                    saveVariablesToFile(envVariables, newSecretKey, environment)
+                }
             }
         })
     
     cli
         .command('set-secret', 'Sets the secret key')
-        .action(async() => {
+        .option('--env, -e <env>', 'Sets the environment for which to change the secret')
+        .action(async({ env }) => {
             const newSecret = await promptSecret('Enter a new secret')
-            saveSecretToFile(newSecret)
+            saveSecretToFile(newSecret, env)
         })
 
     cli

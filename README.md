@@ -140,6 +140,17 @@ ev load .env
 <sup>All the variables on `.env` will be loaded into the default environment</sup>
 </details>
 
+<details>
+  <summary><strong>Setting a different secret for specific environments →</strong></summary>
+<br>
+When using this tool, you may want to give access to staging/local environment variables but not to the production ones.
+
+```bash
+ev change-secret -e production
+```
+<sup>Changes the default secret on the <code>production</code> environment</sup>
+</details>
+
 ## Using in your project
 After initializing and setting a secret, you can just load from your previous `.env` file with the command `ev load .env` and run either `ev | source` or `eval $(ev)` to export the variables into the environment.
 
