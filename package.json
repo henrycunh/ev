@@ -1,6 +1,6 @@
 {
     "name": "@henrycunh/ev",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -9,7 +9,7 @@
         "link": "nr build && pnpm link --global",
         "unlink": "pnpm unlink --global",
         "publish": "node scripts/publish.mjs",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "eval $(npx ev) && echo $teste"
     },
     "bin": {
         "ev": "./dist/index.js"
