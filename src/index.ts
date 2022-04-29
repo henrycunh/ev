@@ -64,7 +64,7 @@ async function fetchVariables(environment?: string) {
         .command('change-secret', 'Creates a new secret key')
         .option('--env, -e <env>', 'Sets the environment for which to change the secret')
         .action(async({ env }) => {
-            const secret = await loadSecretFromFile()
+            const secret = await loadSecretFromFile(env)
             const oldSecret = await promptSecret('Enter your old secret')
             const oldSecretKey = getKeyFromSecret(Buffer.from(oldSecret, 'utf8'))
             if (secret.compare(oldSecretKey) !== 0) {
@@ -75,12 +75,6 @@ async function fetchVariables(environment?: string) {
             const newSecretKey = saveSecretToFile(newSecret, env)
             const variables = loadVariablesFromFile(secret, env)
             saveVariablesToFile(variables, newSecretKey, env)
-            if (!env) {
-                for (const environment of listEnvironments()) {
-                    const envVariables = loadVariablesFromFile(secret, environment)
-                    saveVariablesToFile(envVariables, newSecretKey, environment)
-                }
-            }
         })
     
     cli
