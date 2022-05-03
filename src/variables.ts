@@ -1,5 +1,8 @@
 import { error } from "./log"
 import k from 'kleur'
+import { loadSecretFromEnv } from "./secret"
+import { loadSecretFromFile, loadVariablesFromFile } from "./file"
+import { getKeyFromSecret } from './encrypt'
 
 export const setVariable = (key: string, value: string, variables: any) => {
     return { ...variables, [key]: value }
@@ -20,3 +23,12 @@ export const listVariables = (allowlist: string[], variables: any) => {
     }
     return variables
 }
+
+export const fetchVariables = async(environment?: string, secret?: string) => {
+    const secretBuffer = secret 
+        ? getKeyFromSecret(Buffer.from(secret, 'utf8')) 
+        : loadSecretFromEnv() || await loadSecretFromFile(environment)
+    const variables = loadVariablesFromFile(secretBuffer, environment)
+    return { secret: secretBuffer, variables }
+}
+

@@ -42,7 +42,7 @@ export const decrypt = (encryptedCipher: Buffer, secret: Buffer) => {
         return decryptedMessage
     } catch (e) {
         error('Wrong secret, weird...')
-        process.exit(0)
+        throw new Error('Secret mismatch')
     }
 }
 

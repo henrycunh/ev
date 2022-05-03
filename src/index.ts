@@ -1,18 +1,12 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
 import { version } from '../package.json'
-import { listEnvironments, loadFromDotenv, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
-import { listVariables, removeVariable, setVariable } from './variables'
+import { loadFromDotenv, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
+import { fetchVariables, listVariables, removeVariable, setVariable } from './variables'
 import k from 'kleur'
-import { loadSecretFromEnv, promptSecret } from './secret'
+import { promptSecret } from './secret'
 import { error } from './log'
 import { getKeyFromSecret } from './encrypt'
-
-async function fetchVariables(environment?: string) {
-    const secret = loadSecretFromEnv() || await loadSecretFromFile(environment)
-    const variables = loadVariablesFromFile(secret, environment)
-    return { secret, variables }
-}
 
 (async function setupCommands() {
     const cli = cac('ev')
