@@ -12,5 +12,5 @@
     ],
     "include": [
         "src"
-    ]
+, "packages/core/encrypt.ts"    ]
 }

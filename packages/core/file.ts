@@ -10,6 +10,8 @@ const DEFAULT_DIRECTORY = '.ev'
 const getFilePath = (name: string, environment?: string) => 
     path.join(DEFAULT_DIRECTORY, (environment ? `${slugify(environment)}.` : '') + name)
 
+export const isInitialized = (environment?: string) => fs.existsSync(getFilePath('variables', environment))
+
 export const loadVariablesFromFile = (secret: Buffer, environment?: string) => {
     fse.ensureDirSync(DEFAULT_DIRECTORY)
     
@@ -54,18 +56,27 @@ export const saveVariablesToFile = (variables: any, secret: Buffer, environment?
     fs.writeFileSync(filePath, encryptedContent)
 }
 
-export const loadSecretFromFile = async(environment?: string) => {
+export const loadSecretFromFile = async(environment?: string, skipPrompt?: boolean) => {
     const filePath = getFilePath(environment ? `${environment}.secret` : 'secret')
     fse.ensureFileSync(filePath)
 
     const secret = fs.readFileSync(filePath)
     
     if (secret.length === 0) {
+        if (skipPrompt) {
+            throw new Error('Secret file is empty')
+        }
         const newSecret = await promptSecret('Enter a new secret')
         return saveSecretToFile(newSecret, environment)
     }
     
     return secret
+}
+
+export const loadSecretFromFileSync = (environment?: string) => {
+    const filePath = getFilePath(environment ? `${environment}.secret` : 'secret')
+    fse.ensureFileSync(filePath)
+    return fs.readFileSync(filePath)
 }
 
 export const saveSecretToFile = (secret: string, environment?: string) => {

@@ -3,8 +3,8 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
     declaration: true,
     entries: [
-        'src/index',
-        'src/load',
+        'packages/core/index',
+        'packages/core/load',
     ],
     rollup: {
         emitCJS: true,
