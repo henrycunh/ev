@@ -12,7 +12,7 @@ try {
 
 // Build the package
 console.log(`building the package`)
-await $`npx tsup src/index.ts`
+await $`nr build`
 
 // Change the package version
 console.log(`changing the package version`)
