@@ -1,0 +1,37 @@
+{
+  "name": "nuxt-ev",
+  "version": "1.0.5",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0-rc.2",
+    "cac": "^6.7.12",
+    "fs-extra": "^10.0.0",
+    "kleur": "^4.1.4",
+    "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "latest",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "eslint": "latest",
+    "nuxt": "^3.0.0-rc.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

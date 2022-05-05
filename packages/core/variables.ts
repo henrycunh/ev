@@ -1,7 +1,7 @@
 import { error } from "./log"
 import k from 'kleur'
 import { loadSecretFromEnv } from "./secret"
-import { loadSecretFromFile, loadVariablesFromFile } from "./file"
+import { loadSecretFromFile, loadSecretFromFileSync, loadVariablesFromFile } from "./file"
 import { getKeyFromSecret } from './encrypt'
 
 export const setVariable = (key: string, value: string, variables: any) => {
@@ -24,10 +24,18 @@ export const listVariables = (allowlist: string[], variables: any) => {
     return variables
 }
 
-export const fetchVariables = async(environment?: string, secret?: string) => {
+export const fetchVariables = async(environment?: string, secret?: string, skipPrompt?: boolean) => {
     const secretBuffer = secret 
         ? getKeyFromSecret(Buffer.from(secret, 'utf8')) 
-        : loadSecretFromEnv() || await loadSecretFromFile(environment)
+        : loadSecretFromEnv() || await loadSecretFromFile(environment, skipPrompt)
+    const variables = loadVariablesFromFile(secretBuffer, environment)
+    return { secret: secretBuffer, variables }
+}
+
+export const fetchVariablesSync = (environment?: string, secret?: string) => {
+    const secretBuffer = secret 
+        ? getKeyFromSecret(Buffer.from(secret, 'utf8')) 
+        : loadSecretFromEnv() || loadSecretFromFileSync(environment)
     const variables = loadVariablesFromFile(secretBuffer, environment)
     return { secret: secretBuffer, variables }
 }

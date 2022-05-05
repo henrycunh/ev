@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
-import { version } from '../package.json'
+import { version } from '../../package.json'
 import { loadFromDotenv, loadSecretFromFile, loadVariablesFromFile, saveSecretToFile, saveVariablesToFile } from './file'
 import { fetchVariables, listVariables, removeVariable, setVariable } from './variables'
 import k from 'kleur'
